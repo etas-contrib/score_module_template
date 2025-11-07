@@ -35,6 +35,9 @@ bazel_dep(name = "rules_rust", version = "0.63.0")
 # C/C++ rules for Bazel
 bazel_dep(name = "rules_cc", version = "0.2.1")
 
+# Shell rules for Bazel
+bazel_dep(name = "rules_shell", version = "0.6.1")
+
 # LLVM Toolchains Rules - host configuration
 bazel_dep(name = "toolchains_llvm", version = "1.4.0")
 
@@ -55,3 +58,29 @@ bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2")
 
 #docs-as-code
 bazel_dep(name = "score_docs_as_code", version = "1.1.0")
+
+# Example config with Flatbuffers
+bazel_dep(name = "flatbuffers", version = "25.2.10")
+
+crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
+crate.spec(
+    package = "flatbuffers",
+    version = "25.2.10",
+)
+crate.spec(
+    package = "memmap2",
+    version = "0.9",
+)
+crate.from_specs(name = "crates")
+use_repo(crate, "crates")
+
+bazel_dep(name = "rules_pkg", version = "1.1.0")
+
+# Python dependencies
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+pip.parse(
+    hub_name = "module_pip",
+    python_version = "3.12",
+    requirements_lock = "//:requirements.txt",
+)
+use_repo(pip, "module_pip")

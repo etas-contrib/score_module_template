@@ -1,0 +1,14 @@
+{
+  "schema_version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "app_name": "TestApp",
+  "advanced_settings": {
+    "log_level": "INFO",
+    "buffer_size_kb": 2048,
+    "enable_metrics": true,
+    "allowed_hosts": ["host1", "host2"]
+  }
+}

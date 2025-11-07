@@ -54,3 +54,11 @@ styles/
 .venv
 __pycache__/
 /.coverage
+.cache
+
+# Language Server
+compile_commands.json
+rust-project.json
+
+# Rust
+target/

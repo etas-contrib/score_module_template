@@ -1,0 +1,53 @@
+// Basic FlatBuffer Configuration Example
+namespace config.example;
+
+// Version information following semantic versioning principles
+struct Version {
+    major:uint16;
+    minor:uint16;
+    patch:uint16;
+}
+
+table NewFeature {
+    feature_name:string;
+}
+
+// Application configuration with basic data types
+table AppConfig {
+    // Schema version for forward/backward compatibility
+    schema_version:Version (required);
+
+    // Scalar fields
+    app_name:string (required);
+    app_id:uint32; // Implicit default is 0
+
+    // Scalar fields with explicit default values
+    debug_enabled:bool = false;
+    // ###### DEMO SCHEMA EVOLUTION - START ######
+    max_connections:uint16 = 100 (deprecated);
+    // ###### DEMO SCHEMA EVOLUTION - END ######
+    timeout_ms:uint32 = 5000;
+
+    // Nested table
+    advanced_settings:AdvancedSettings (required);
+
+    // ###### DEMO SCHEMA EVOLUTION - START ######
+    // New fields need to be added at the end of the table to maintain compatibility.
+    // Alternatively field identifier (id) can be used to explicitly tag fields
+    // refer to https://flatbuffers.dev/schema/#attributes.
+    new_feature_enabled:bool = false;
+    new_feature:NewFeature; // optional new nested table
+    // ###### DEMO SCHEMA EVOLUTION - END ######
+}
+
+table AdvancedSettings {
+    log_level:string;  // String default values are not supported in all languages e.g. Cpp
+    buffer_size_kb:uint32 = 1024;
+    enable_metrics:bool = true;
+    allowed_hosts:[string];  // Vector of strings
+}
+
+// Root configuration object
+root_type AppConfig;
+// Module specific file identifier; helps versioning and flatc quick checks.
+file_identifier "DEMO";

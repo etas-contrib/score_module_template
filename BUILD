@@ -13,6 +13,7 @@
 
 load("@score_docs_as_code//:docs.bzl", "docs")
 load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker", "setup_starpls", "use_format_targets")
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("//:project_config.bzl", "PROJECT_CONFIG")
 
 setup_starpls(
@@ -45,4 +46,13 @@ use_format_targets()
 
 docs(
     source_dir = "docs",
+)
+
+# In order to update the python requirements, change the `requirements.in` file and run:
+# `bazel run //python_requirements.update`.
+compile_pip_requirements(
+    name = "python_requirements",
+    srcs = ["requirements.in"],
+    requirements_txt = "requirements.txt",
+    tags = ["manual"],
 )

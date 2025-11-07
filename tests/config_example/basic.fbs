@@ -1,0 +1,39 @@
+// Basic FlatBuffer Configuration Example
+namespace config.example;
+
+// Version information following semantic versioning principles
+struct Version {
+    major:uint16;
+    minor:uint16;
+    patch:uint16;
+}
+
+// Application configuration with basic data types
+table AppConfig {
+    // Schema version for forward/backward compatibility
+    schema_version:Version (required);
+
+    // Scalar fields
+    app_name:string (required);
+    app_id:uint32; // Implicit default is 0
+
+    // Scalar fields with explicit default values
+    debug_enabled:bool = false;
+    max_connections:uint16 = 100;
+    timeout_ms:uint32 = 5000;
+
+    // Nested table
+    advanced_settings:AdvancedSettings (required);
+}
+
+table AdvancedSettings {
+    log_level:string;  // String default values are not supported in all languages e.g. C++
+    buffer_size_kb:uint32 = 1024;
+    enable_metrics:bool = true;
+    allowed_hosts:[string];  // Vector of strings
+}
+
+// Root configuration object
+root_type AppConfig;
+// Module specific file identifier; helps versioning and flatc quick checks.
+file_identifier "DEMO";

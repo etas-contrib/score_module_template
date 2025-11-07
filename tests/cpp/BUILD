@@ -16,4 +16,5 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",  # GoogleTest dependency via Bazel Modules
     ],
+    size = "small",
 )

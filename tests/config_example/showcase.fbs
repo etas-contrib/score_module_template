@@ -1,0 +1,131 @@
+// FlatBuffer Schema Showcase - Demonstrates schema language features
+
+// File inclusion example
+include "basic.fbs";
+
+namespace showcase.scalar_types;
+/// Scalar types with implicit 0 default value (comment appears in generated code)
+table ScalarTypes {
+    scalar_bool:bool;
+    scalar_int8:int8;           //byte
+    scalar_uint8:uint8;         //ubyte
+    scalar_int16:int16;         //short
+    scalar_uint16:uint16;       //ushort
+    scalar_int32:int32;         //int
+    scalar_uint32:uint32;       //uint
+    scalar_int64:int64;         //long
+    scalar_uint64:uint64;       //ulong
+    scalar_float32:float32;     //float
+    scalar_float64:float64;     //double
+}
+
+/// Scalar types with explicit default value (comment appears in generated code)
+table ScalarExplicitDefault {
+    scalar_bool:bool = true;
+    scalar_int8:int8 = 127;
+    scalar_uint8:uint8 = 255;
+    scalar_int16:int16 = 32767;
+    scalar_uint16:uint16 = 65535;
+    scalar_int32:int32 = 2147483647;
+    scalar_uint32:uint32 = 4294967295;
+    scalar_int64:int64 = 9223372036854775807;
+    scalar_uint64:uint64 = 18446744073709551615;
+    scalar_float32:float32 = 3.4028235e+38;
+    scalar_float64:float64 = 1.7976931348623157e+308;
+}
+
+namespace showcase.enum_types;
+enum EnumType : int8 {
+    MODE_A = -1,
+    MODE_B,
+    MODE_C = 5
+}
+table EnumExample {
+    mode:EnumType = MODE_A;
+}
+
+namespace showcase.string_types;
+table StringTypes {
+    some_string:string (required);
+    optional_string:string;
+}
+
+namespace showcase.vector_types;
+table VectorTypes {
+    vector_scalar:[uint16];
+    vector_string:[string];
+    vector_object:[showcase.scalar_types.ScalarTypes];
+}
+
+namespace showcase.struct_types;
+struct StructSimple (force_align: 8) {
+    struct_bool:bool;
+    struct_int8:int8;
+    fixed_string:[byte:42];
+    fixed_vector:[uint16:3];
+}
+
+struct StructComplex {
+    nested_struct:[StructSimple:2];
+    value_int32:int32;
+}
+
+namespace showcase.tree;
+table TreeElement {
+    name:string;
+    childs:[TreeElement];
+}
+
+namespace showcase.union_types;
+union ExampleUnion {
+    showcase.scalar_types.ScalarTypes,
+    showcase.string_types.StringTypes,
+    showcase.vector_types.VectorTypes,
+    // Structs in unions are not supported in all languages (e.g. Rust, Python)
+    // showcase.struct_types.StructSimple,
+}
+
+table UnionExample {
+    union_value:ExampleUnion;
+}
+
+// Vector of union only has experimental support in C++
+// table UnionVectorExample {
+//     union_values:[ExampleUnion];
+// }
+
+namespace showcase.key;
+// Emulate std::map like behavior for vectors
+// https://flatbuffers.dev/languages/cpp/#storing-maps-dictionaries-in-a-flatbuffer
+table KeyExample {
+    id:string (key);
+    value:int32;
+}
+
+table KeySortedVector {
+    items:[KeyExample];
+}
+
+namespace showcase.include_demo;
+table ImportedSchema {
+    imported_root:config.example.AppConfig;
+    imported_table:config.example.AdvancedSettings;
+}
+
+namespace showcase;
+table ShowcaseRoot {
+    scalars:scalar_types.ScalarTypes;
+    scalars_default:scalar_types.ScalarExplicitDefault;
+    enums:enum_types.EnumExample;
+    strings:string_types.StringTypes;
+    vectors:vector_types.VectorTypes;
+    structs:struct_types.StructSimple;
+    structs_complex:struct_types.StructComplex;
+    tree:tree.TreeElement;
+    union_example:union_types.UnionExample;
+    key_example:key.KeySortedVector;
+    import:include_demo.ImportedSchema;
+}
+
+root_type ShowcaseRoot;
+file_identifier "SHOW";
