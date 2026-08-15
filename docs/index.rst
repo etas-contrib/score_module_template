@@ -12,54 +12,102 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-Module Template Documentation
-=============================
+[Module Name]
+=============
 
-<Brief description of the module and the implemented feature(s).>
+Overview
+--------
 
-<Further documentation of the module
-and the implemented feature(s) should be added in the respective sections of the documentation
-(e.g., feature architecture, safety analysis, security analysis, manuals, etc.) following the provided
-templates and guidelines.>
+.. grid:: 1
+   :class-container: score-grid score-grid-intro
 
-.. toctree::
-   :titlesonly:
-   :hidden:
-   :glob:
+   .. grid-item-card::
 
-   template/index
+.. note::
 
-Feature Documentation
----------------------
+   Please provide a brief description of the module and the implemented feature(s).
 
-The Feature documentation covers the feature-level definition of <module name>, including architecture and safety planning artifacts.
+   Further documentation of the module and the implemented feature(s) should be added
+   in the respective later sections of the documentation (e.g., feature architecture, safety analysis, security analysis, manuals, etc.)
+   following the provided templates and guidelines.
 
-.. toctree::
-   :maxdepth: 1
+Included Elements
+-----------------
 
-   features/index
+.. grid:: 1 1 3 3
+   :class-container: score-grid score-grid-artifacts
 
-Module Documentation
---------------------
+   .. grid-item-card::
+      :link: features/index
+      :link-type: doc
+      :text-align: center
 
-The Module documentation covers the module-level view, including architecture, safety management documents, and the user manual.
+      :octicon:`package;1.5em`
 
-.. toctree::
-   :maxdepth: 1
+      Feature(s)
+      ^^^
+      Explore the Feature(s) and their Logical Interfaces, which are the heart of the S-CORE software.
+      The Feature documentation covers the feature-level definition of [Module Name], including architecture and safety planning artifacts.
 
-   module/index
-   verification_report/module_verification_report
+   .. grid-item-card::
+      :link: module/index
+      :link-type: doc
+      :text-align: center
+
+      :octicon:`package;1.5em`
+
+      Module(s)
+      ^^^
+      The Module documentation covers the module-level view, including architecture, safety management documents, and the user manual.
+      module/index
+      verification_report/module_verification_report
 
 
-Component Documentation
------------------------
+   .. grid-item-card::
+      :link: components/index
+      :link-type: doc
+      :text-align: center
 
-The Components documentation provides detailed documentation for each individual library component, including requirements, architecture, and design decisions:
+      :octicon:`package;1.5em`
 
-.. toctree::
-   :maxdepth: 1
+      Component(s)
+      ^^^
+      The Components documentation provides detailed documentation for each individual library component, including requirements, architecture, and design decisions:
 
-   components/index
+
+User´s Manuals
+--------------
+
+.. grid:: 1 1 2 2
+   :class-container: score-grid score-grid-artifacts
+
+   .. grid-item-card::
+      :text-align: center
+
+      :octicon:`package;1.5em`
+
+      Developer
+      ^^^
+      Explore the Feature(s) and their Logical Interfaces, which are the heart of the S-CORE software.
+      The Feature documentation covers the feature-level definition of [Module Name], including architecture and safety planning artifacts.
+
+   .. grid-item-card::
+      :text-align: center
+
+      :octicon:`package;1.5em`
+
+      End-User
+      ^^^
+      Blabla
+
+
+
+
+
+
+
+
+
 
 Architecture Modeling Example
 -----------------------------
@@ -119,3 +167,11 @@ The configuration enables conditional build behavior:
 * **Language-specific tools**: For C++ code, tools like ``clang-tidy`` are used; for Rust code, ``clippy`` is used
 * **Safety level**: The ASIL level affects safety-related build settings and validation
 * **Source code languages**: The build system optimizes for the configured languages
+
+
+.. toctree::
+   :titlesonly:
+   :hidden:
+   :glob:
+
+   template/index
